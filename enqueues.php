@@ -49,7 +49,6 @@ function enqueues() {
 	$uniqid = uniqid();
 	$delimiter = '!!';
 
-
 	/*
 	 * Enqueue JS files
 	 */
@@ -116,8 +115,6 @@ function enqueues() {
 		$files[] = $file;
 
 	}
-
-
 
 	/*
 	 * Enqueue CSS files
