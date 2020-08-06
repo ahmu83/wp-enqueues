@@ -1,0 +1,9 @@
+# use the function arguments in the order
+# wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer )
+# $handle: string, $src: string, $deps: array|string, $ver: string|boolean, $in_footer: boolean
+# 
+# comment a line by perpending # to a line
+
+parallax-js !! /js/parallax.min.js !! jquery
+
+custom-js !! /js/custom.js !! jquery !! rand

@@ -1,0 +1,11 @@
+# use the function arguments in the order
+# wp_enqueue_style( $handle, $src, $deps, $ver, $media )
+# $handle: string, $src: string, $deps: array|string, $ver: string|boolean, $media: string
+# 
+# comment a line by perpending # to a line
+
+google-fonts !! https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap
+
+animate-css !! https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css
+
+custom-styles !! /css/custom.css !! !! rand
