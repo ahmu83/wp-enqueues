@@ -13,6 +13,13 @@
  * @link     https://ahmadkarim.com/
  */
 
+/**
+ * Get the enqueues list from CSS or JS static files
+ * 
+ * @param string $type Type of the file
+ * 
+ * @return array
+ */
 function enqueues_list($type = 'js') {
 
   $filename = get_stylesheet_directory() . "/.{$type}-enqueues";
@@ -43,6 +50,11 @@ function enqueues_list($type = 'js') {
 
 }
 
+/**
+ * Handler function for wp_enqueue_scripts hook
+ * 
+ * @return array List of enqueue files
+ */
 function enqueues() {
 
   $files = array();
