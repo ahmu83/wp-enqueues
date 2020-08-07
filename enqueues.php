@@ -15,175 +15,175 @@
 
 function enqueues_list($type = 'js') {
 
-	$filename = get_stylesheet_directory() . "/.{$type}-enqueues";
-	$files_list = array();
+  $filename = get_stylesheet_directory() . "/.{$type}-enqueues";
+  $files_list = array();
 
-	if (file_exists($filename)) {
+  if (file_exists($filename)) {
 
-		$names = file($filename);
-		$names = array_filter($names, function($n) {
+    $names = file($filename);
+    $names = array_filter($names, function($n) {
 
-			if (empty(trim($n)) || substr(trim($n), 0, 1) == '#') {
+      if (empty(trim($n)) || substr(trim($n), 0, 1) == '#') {
 
-				return false;
+        return false;
 
-			} else {
+      } else {
 
-				return true;
+        return true;
 
-			}
+      }
 
-		});
+    });
 
-		$files_list = array_values($names);
+    $files_list = array_values($names);
 
-	}
+  }
 
-	return $files_list;
+  return $files_list;
 
 }
 
 function enqueues() {
 
-	$files = array();
-	$uniqid = uniqid();
-	$delimiter = '!!';
+  $files = array();
+  $uniqid = uniqid();
+  $delimiter = '!!';
 
-	/*
-	 * Enqueue JS files
-	 */
-	foreach (enqueues_list('js') as $file) {
+  /*
+   * Enqueue JS files
+   */
+  foreach (enqueues_list('js') as $file) {
 
-		/*
-		 * Trim the arguments
-		 */
-		$file = array_map(function($n) {
+    /*
+     * Trim the arguments
+     */
+    $file = array_map(function($n) {
 
-			return trim($n);
+      return trim($n);
 
-		}, explode($delimiter, $file));
+    }, explode($delimiter, $file));
 
-		/*
-		 * Check if the src is relative or absolute
-		 */
-		if (isset($file[1])) {
+    /*
+     * Check if the src is relative or absolute
+     */
+    if (isset($file[1])) {
 
-			$url = parse_url($file[1]);
-			$file[1] = isset($url['host']) ? $file[1] : get_stylesheet_directory_uri() . $file[1];
+      $url = parse_url($file[1]);
+      $file[1] = isset($url['host']) ? $file[1] : get_stylesheet_directory_uri() . $file[1];
 
-		}
+    }
 
-		/*
-		 * Check if the deps argument is set
-		 */
-		if (isset($file[2])) {
+    /*
+     * Check if the deps argument is set
+     */
+    if (isset($file[2])) {
 
-			/*
-			 * Trim the deps argument
-			 */
-			$deps = array_map(function($n) {
+      /*
+       * Trim the deps argument
+       */
+      $deps = array_map(function($n) {
 
-				return trim($n);
+        return trim($n);
 
-			}, explode(',', $file[2]));
+      }, explode(',', $file[2]));
 
-			$deps = array_filter($deps);
+      $deps = array_filter($deps);
 
-			$file[2] = $deps;
+      $file[2] = $deps;
 
-		}
+    }
 
-		/*
-		 * Check if the ver argument is set and 
-		 * if it is set to rand in order to un-cache 
-		 * a file every-time the page is loaded
-		 */
-		if (isset($file[3]) && $file[3] == 'rand') {
+    /*
+     * Check if the ver argument is set and 
+     * if it is set to rand in order to un-cache 
+     * a file every-time the page is loaded
+     */
+    if (isset($file[3]) && $file[3] == 'rand') {
 
-			$file[3] = $uniqid;
+      $file[3] = $uniqid;
 
-		}
+    }
 
-		$handle = $file[0];
-		$src = $file[1];
-		$deps = $file[2] ?? array();
-		$ver = $file[3] ?? false;
-		$in_footer = $file[4] ?? false;
+    $handle = $file[0];
+    $src = $file[1];
+    $deps = $file[2] ?? array();
+    $ver = $file[3] ?? false;
+    $in_footer = $file[4] ?? false;
 
-		wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
+    wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
 
-		$files[] = $file;
+    $files[] = $file;
 
-	}
+  }
 
-	/*
-	 * Enqueue CSS files
-	 */
-	foreach (enqueues_list('css') as $file) {
+  /*
+   * Enqueue CSS files
+   */
+  foreach (enqueues_list('css') as $file) {
 
-		/*
-		 * Trim the arguments
-		 */
-		$file = array_map(function($n) {
+    /*
+     * Trim the arguments
+     */
+    $file = array_map(function($n) {
 
-			return trim($n);
+      return trim($n);
 
-		}, explode($delimiter, $file));
+    }, explode($delimiter, $file));
 
-		/*
-		 * Check if the src is relative or absolute
-		 */
-		if (isset($file[1])) {
+    /*
+     * Check if the src is relative or absolute
+     */
+    if (isset($file[1])) {
 
-			$url = parse_url($file[1]);
-			$file[1] = isset($url['host']) ? $file[1] : get_stylesheet_directory_uri() . $file[1];
+      $url = parse_url($file[1]);
+      $file[1] = isset($url['host']) ? $file[1] : get_stylesheet_directory_uri() . $file[1];
 
-		}
+    }
 
-		/*
-		 * Check if the deps argument is set
-		 */
-		if (isset($file[2])) {
+    /*
+     * Check if the deps argument is set
+     */
+    if (isset($file[2])) {
 
-			/*
-			 * Trim the deps argument
-			 */
-			$deps = array_map(function($n) {
+      /*
+       * Trim the deps argument
+       */
+      $deps = array_map(function($n) {
 
-				return trim($n);
+        return trim($n);
 
-			}, explode(',', $file[2]));
+      }, explode(',', $file[2]));
 
-			$deps = array_filter($deps);
+      $deps = array_filter($deps);
 
-			$file[2] = $deps;
+      $file[2] = $deps;
 
-		}
+    }
 
-		/*
-		 * Check if the ver argument is set and 
-		 * if it is set to rand in order to un-cache 
-		 * a file every-time the page is loaded
-		 */
-		if (isset($file[3]) && $file[3] == 'rand') {
+    /*
+     * Check if the ver argument is set and 
+     * if it is set to rand in order to un-cache 
+     * a file every-time the page is loaded
+     */
+    if (isset($file[3]) && $file[3] == 'rand') {
 
-			$file[3] = $uniqid;
+      $file[3] = $uniqid;
 
-		}
+    }
 
-		$handle = $file[0];
-		$src = $file[1];
-		$deps = $file[2] ?? array();
-		$ver = $file[3] ?? false;
-		$media = $file[4] ?? false;
+    $handle = $file[0];
+    $src = $file[1];
+    $deps = $file[2] ?? array();
+    $ver = $file[3] ?? false;
+    $media = $file[4] ?? false;
 
-		wp_enqueue_style($handle, $src, $deps, $ver, $media);
+    wp_enqueue_style($handle, $src, $deps, $ver, $media);
 
-		$files[] = $file;
+    $files[] = $file;
 
-	}
+  }
 
-	return $files;
+  return $files;
 
 }
 add_action( 'wp_enqueue_scripts', 'enqueues' );
